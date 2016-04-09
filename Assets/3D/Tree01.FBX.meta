@@ -8,15 +8,25 @@ ModelImporter:
     100000: Box001
     100002: Cylinder001
     100004: //RootNode
+    100006: Tree01Copa
+    100008: Tree01Tallo
     400000: Box001
     400002: Cylinder001
     400004: //RootNode
+    400006: Tree01Copa
+    400008: Tree01Tallo
     2300000: Box001
     2300002: Cylinder001
+    2300004: Tree01Copa
+    2300006: Tree01Tallo
     3300000: Box001
     3300002: Cylinder001
+    3300004: Tree01Copa
+    3300006: Tree01Tallo
     4300000: Cylinder001
     4300002: Box001
+    4300004: Tree01Tallo
+    4300006: Tree01Copa
   materials:
     importMaterials: 1
     materialName: 0

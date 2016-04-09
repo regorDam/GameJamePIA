@@ -64,9 +64,16 @@ public class FisrtPersonConroller : MonoBehaviour
 		if (!m_focus)
 			return;
 		
-        transform.Rotate(Vector3.up * Input.GetAxis("RightJoystickX" + playerId) * Time.deltaTime * mouseSensitivityX);
-        verticalLookRotation += Input.GetAxis("RightJoystickY" + playerId) * Time.deltaTime * mouseSensitivityY;
-        verticalLookRotation = Mathf.Clamp(verticalLookRotation, -60, 60);
+		Vector3 rotX = Vector3.up * Input.GetAxis("RightJoystickX" + playerId) *  Time.deltaTime * mouseSensitivityX;
+		if(rotX.magnitude > 0.1f) transform.Rotate(rotX);
+
+		float rotY = Input.GetAxis("RightJoystickY" + playerId) * Time.deltaTime *  mouseSensitivityY;
+		if (Mathf.Abs(rotY) > 0.1f)
+		{
+			verticalLookRotation += rotY;
+			verticalLookRotation = Mathf.Clamp(verticalLookRotation, -60, 60);
+		}
+
         cameraT.localEulerAngles = Vector3.left * verticalLookRotation;
 
         Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal" + playerId), 0, 
@@ -105,7 +112,7 @@ public class FisrtPersonConroller : MonoBehaviour
 		if (enrage && coldownPowerUp < 0)
 			enrage = false;
 
-        if ((Input.GetKey("left shift") || Input.GetKey("right shift")))
+		if ((Input.GetButton("Run" + playerId) || Input.GetKey("right shift")))
         {
             targetMoveAmount = moveDir * (runSpeed * godForce * runSpeedPower);
 

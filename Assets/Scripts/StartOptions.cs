@@ -55,7 +55,6 @@ public class StartOptions : MonoBehaviour {
 			//Use invoke to delay calling of LoadDelayed by half the length of fadeColorAnimationClip
 			Invoke ("LoadDelayed", fadeColorAnimationClip.length * .5f);
 
-			Invoke ("StartHost", fadeColorAnimationClip.length * .5f);
 			//Set the trigger of Animator animColorFade to start transition to the FadeToOpaque state.
 			animColorFade.SetTrigger ("fade");
 		} 
@@ -72,18 +71,7 @@ public class StartOptions : MonoBehaviour {
 
 
 	}
-
-	private void StartHost()
-	{
-		NetworkManager.singleton.StartHost ();
-	}
-
-
-	public void LanClientClicked()
-	{
-		NetworkManager.singleton.StartClient ();
-
-	}
+		
 
 	//Once the level has loaded, check if we want to call PlayLevelMusic
 	void OnLevelWasLoaded()

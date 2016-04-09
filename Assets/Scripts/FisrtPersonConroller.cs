@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.Networking;
 using UnityEngine.EventSystems;
 
-public class FisrtPersonConroller : NetworkBehaviour
+public class FisrtPersonConroller : MonoBehaviour
 {
 	//Player Settings
     public float mouseSensitivityX = 250f;
@@ -52,11 +51,7 @@ public class FisrtPersonConroller : NetworkBehaviour
 	}
 	void Update ()
     {
-		if (!isLocalPlayer) {
-			cameraT.GetComponent<Camera> ().enabled = false;
-
-			return;
-		}
+		
 		if (!m_focus)
 			return;
         transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivityX);
@@ -111,7 +106,7 @@ public class FisrtPersonConroller : NetworkBehaviour
 
 		if(Input.GetButtonDown("Fire1") && CheckFire())
 		{
-			CmdFire();
+			Fire();
 		}
 
 
@@ -150,8 +145,7 @@ public class FisrtPersonConroller : NetworkBehaviour
 	}
 
 
-	[Command]
-	public void CmdFire()
+	public void Fire()
 	{
 		GameObject bullet;
 		bullet = (GameObject)Instantiate(Resources.Load("Prefabs/Bullet", typeof(GameObject)), bulletSpawn.position, bulletSpawn.rotation);
@@ -162,8 +156,6 @@ public class FisrtPersonConroller : NetworkBehaviour
 		{
 			GetComponentInChildren<AudioSource>().Play();
 		}
-
-		NetworkServer.Spawn (bullet);
 
 	}
 

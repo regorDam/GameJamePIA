@@ -14,6 +14,8 @@ public class FisrtPersonConroller : MonoBehaviour
     public float godForceMax = 5;
     float godForceMin = 1;
     float godForce;
+	float runSpeedPower;
+	float jumpForcePower;
     public LayerMask groundedMask;
 
 	//Connections
@@ -30,10 +32,12 @@ public class FisrtPersonConroller : MonoBehaviour
 	bool grounded;
     bool dead;
 	bool m_focus =true ;
-    
-
+	bool runPower = false;
+	bool jumpPower = false;
 	public Transform bulletSpawn;
 
+
+	public float coldownPowerUp;
 
     void Start ()
     {
@@ -54,6 +58,7 @@ public class FisrtPersonConroller : MonoBehaviour
 		
 		if (!m_focus)
 			return;
+		
         transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivityX);
         verticalLookRotation += Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivityY;
         verticalLookRotation = Mathf.Clamp(verticalLookRotation, -60, 60);
@@ -70,10 +75,28 @@ public class FisrtPersonConroller : MonoBehaviour
         else
             godForce = godForceMin;
 
+		coldownPowerUp -= Time.deltaTime;
+
+		if (runPower && coldownPowerUp > 0)
+			runSpeedPower = 5;
+		else 
+		{
+			runPower = false;
+			runSpeedPower = 1;
+		}
+			
+		if (jumpPower && coldownPowerUp > 0)
+			jumpForcePower = 5;
+		else 
+		{
+			jumpPower = false;
+			jumpForcePower = 1;
+		}
+
 
         if ((Input.GetKey("left shift") || Input.GetKey("right shift")))
         {
-            targetMoveAmount = moveDir * (runSpeed * godForce );
+            targetMoveAmount = moveDir * (runSpeed * godForce * runSpeedPower);
 
         }
         else
@@ -86,7 +109,7 @@ public class FisrtPersonConroller : MonoBehaviour
         {
             if (grounded)
             {
-                rgb.AddForce(transform.up * (jumpForce * godForce));
+				rgb.AddForce(transform.up * (jumpForce * godForce * jumpForcePower));
             }
 
         }
@@ -112,6 +135,26 @@ public class FisrtPersonConroller : MonoBehaviour
 
     }
 
+	void OnCollisionEnter(Collider col)
+	{
+		if(col.transform.tag.Equals("PowerUp"))
+		{
+			switch (col.transform.GetComponent<PowerUp> ().type) 
+			{
+			case 1:
+				runPower = true;
+				coldownPowerUp = 13;
+				break;
+			case 2:
+				jumpPower = true;
+				coldownPowerUp = 13;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+
     void OnCollisionStay(Collision collisionInfo)
     {
         if(collisionInfo.gameObject.layer == 8)
@@ -136,10 +179,10 @@ public class FisrtPersonConroller : MonoBehaviour
 
 	bool CheckFire()
 	{
-//		if (EventSystem.current.IsPointerOverGameObject())
-//		{ // UI elements getting the hit/hover & is dead
-//			return false;
-//		}
+		if (EventSystem.current.IsPointerOverGameObject())
+		{ // UI elements getting the hit/hover & is dead
+			return false;
+		}
 
 		return true;
 	}

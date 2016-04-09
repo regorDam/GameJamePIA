@@ -20,16 +20,23 @@ public class HUDManager : MonoBehaviour
 
 
 	}
-	
+
+
+
+
+
 	// Update is called once per frame
 	void Update () {
-	
-		for (int x = imgLifes.Length; x > 0; x--) 
+
+		//// UPDATE LIFES ////
+		int lifes = health.GetLifes();
+		int maxLifes = health.GetMaxLifes();
+		for (int x = maxLifes; x > 0; x--)
 		{
-			if (x > health.lifes) 
-			{
-				imgLifes [x].SetActive (false);
-			}
+			if(lifes >= x)
+				transform.Find("Main Camera/HUD Canvas/Panel/Lifes/Life " + x).gameObject.GetComponent<Image>().enabled = true;
+			else
+				transform.Find("Main Camera/HUD Canvas/Panel/Lifes/Life " + x).gameObject.GetComponent<Image>().enabled = false;
 		}
 
 	}

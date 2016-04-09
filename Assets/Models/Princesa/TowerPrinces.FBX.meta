@@ -1,0 +1,144 @@
+fileFormatVersion: 2
+guid: d8b4d9c7edff54d78a2aad2d043d536d
+timeCreated: 1460238233
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Plane001
+    100002: Princes Hand Left
+    100004: Princes Hand out Left
+    100006: Princes Hand out right
+    100008: Princes Hand Right
+    100010: Princes Happy
+    100012: PrincesaTalk
+    100014: PrincesaTalk Out
+    100016: PrincesaTalkWords
+    100018: PrincesHappy
+    100020: PrincesHappyOut
+    100022: PrincesTalk
+    100024: TowerPrinces
+    100026: //RootNode
+    100028: TowerPrinces 1
+    100030: TowerPrincesFoot
+    100032: TowerPrincesOut
+    400000: Plane001
+    400002: Princes Hand Left
+    400004: Princes Hand out Left
+    400006: Princes Hand out right
+    400008: Princes Hand Right
+    400010: Princes Happy
+    400012: PrincesaTalk
+    400014: PrincesaTalk Out
+    400016: PrincesaTalkWords
+    400018: PrincesHappy
+    400020: PrincesHappyOut
+    400022: PrincesTalk
+    400024: //RootNode
+    400026: TowerPrinces
+    400028: TowerPrinces 1
+    400030: TowerPrincesFoot
+    400032: TowerPrincesOut
+    2300000: Plane001
+    2300002: Princes Hand Left
+    2300004: Princes Hand out Left
+    2300006: Princes Hand out right
+    2300008: Princes Hand Right
+    2300010: Princes Happy
+    2300012: PrincesaTalk
+    2300014: PrincesaTalk Out
+    2300016: PrincesaTalkWords
+    2300018: PrincesHappyOut
+    2300020: TowerPrinces 1
+    2300022: TowerPrincesFoot
+    2300024: TowerPrincesOut
+    3300000: Plane001
+    3300002: Princes Hand Left
+    3300004: Princes Hand out Left
+    3300006: Princes Hand out right
+    3300008: Princes Hand Right
+    3300010: Princes Happy
+    3300012: PrincesaTalk
+    3300014: PrincesaTalk Out
+    3300016: PrincesaTalkWords
+    3300018: PrincesHappyOut
+    3300020: TowerPrinces 1
+    3300022: TowerPrincesFoot
+    3300024: TowerPrincesOut
+    4300000: Plane001
+    4300002: PrincesHappyOut
+    4300004: Princes Happy
+    4300006: Princes Hand Right
+    4300008: Princes Hand out right
+    4300010: Princes Hand Left
+    4300012: Princes Hand out Left
+    4300014: TowerPrinces
+    4300016: TowerPrincesOut
+    4300018: TowerPrincesFoot
+    4300020: PrincesaTalk
+    4300022: PrincesaTalk Out
+    4300024: PrincesaTalkWords
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

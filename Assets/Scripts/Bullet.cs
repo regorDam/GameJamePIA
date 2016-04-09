@@ -5,7 +5,10 @@ public class Bullet : MonoBehaviour
 {
 
     public float speed = 6f;
+	public float FireRate = 0.0f;
 
+
+	private FirstPersonConroller player;
 
     private GameObject owner;
     int damage;
@@ -43,6 +46,16 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject, 4);
         }
+
+		var hit = col.gameObject;
+		var health = hit.GetComponent<Health>();
+
+		if (health != null)
+		{
+			health.TakeDamage(damage);
+			if (health.currentHealth <= 0 && player != null)
+				player.AddScore(10);
+		}
     }
 
 

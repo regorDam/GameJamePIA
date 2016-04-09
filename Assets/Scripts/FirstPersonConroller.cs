@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-public class FisrtPersonConroller : MonoBehaviour
+public class FirstPersonConroller : MonoBehaviour
 {
 	//Player Settings
     public float mouseSensitivityX = 250f;
@@ -18,7 +18,7 @@ public class FisrtPersonConroller : MonoBehaviour
 	float runSpeedPower;
 	float jumpForcePower;
     public LayerMask groundedMask;
-
+	public float score = 0;
     public int playerId = 0;
 
 	//Connections
@@ -179,6 +179,11 @@ public class FisrtPersonConroller : MonoBehaviour
 			Destroy (col.gameObject);
 		} 
 
+		if (col.gameObject.layer == 10 && playerId == 1 || col.gameObject.layer == 11 && playerId == 2) 
+		{
+			col.rigidbody.AddForce ((transform.position - col.transform.position) * Time.deltaTime);
+		}
+
 	}
 
     void OnCollisionStay(Collision collisionInfo)
@@ -239,6 +244,13 @@ public class FisrtPersonConroller : MonoBehaviour
         }
 
     }
+
+
+
+	public void AddScore(int score)
+	{
+		this.score += score;
+	}
 
 
 }

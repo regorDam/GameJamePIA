@@ -13,7 +13,7 @@ public class HUDManager : MonoBehaviour
 	// Use this for initialization
 	void Start () {
 	
-		imgLifes = GameObject.FindGameObjectsWithTag ("Lifes");
+		imgLifes = GameObject.FindGameObjectsWithTag ("life");
 
 		health = transform.GetComponent<Health> ();
 

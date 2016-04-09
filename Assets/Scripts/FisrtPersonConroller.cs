@@ -208,9 +208,10 @@ public class FisrtPersonConroller : MonoBehaviour
 	{
 		GameObject bullet;
 		if (enrage) {
-			for (int x = 0; x > 3; x++) {
-				
-				bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet", typeof(GameObject)), bulletSpawn [0].position, bulletSpawn [0].rotation);
+			for (int x = 0; x > 3; x++) 
+			{
+				Debug.Log ("");
+				bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet", typeof(GameObject)), bulletSpawn [x].position, bulletSpawn [x].rotation);
 				bullet.GetComponent<Bullet> ().Config (gameObject, 2);
 				//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
 				bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);

@@ -34,6 +34,8 @@ public class FisrtPersonConroller : MonoBehaviour
 	bool m_focus =true ;
 	bool runPower = false;
 	bool jumpPower = false;
+	bool haloShield = false;
+	bool enrage = false;
 	public Transform bulletSpawn;
 
 
@@ -93,6 +95,9 @@ public class FisrtPersonConroller : MonoBehaviour
 			jumpForcePower = 1;
 		}
 
+		if (haloShield && coldownPowerUp < 0)
+			haloShield = false;
+
 
         if ((Input.GetKey("left shift") || Input.GetKey("right shift")))
         {
@@ -148,6 +153,14 @@ public class FisrtPersonConroller : MonoBehaviour
 			case 2:
 				jumpPower = true;
 				coldownPowerUp = 13;
+				break;
+			case 3:
+				haloShield = true;
+				coldownPowerUp = 5;
+				break;
+			case 4:
+				enrage = true;
+				coldownPowerUp = 6;
 				break;
 			default:
 				break;

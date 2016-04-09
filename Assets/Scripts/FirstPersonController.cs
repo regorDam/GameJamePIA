@@ -61,7 +61,7 @@ public class FirstPersonController : MonoBehaviour
 	void Awake()
 	{
 		weaponController = GameObject.Find ("Main Camera/Weapon").GetComponent<WeaponController> ();
-		//transform.SetParent (GameObject.Find ("World").transform);
+		transform.SetParent (GameObject.Find ("World").transform);
 		rgb = GetComponent<Rigidbody>();
 	
 	}

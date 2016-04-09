@@ -135,7 +135,7 @@ public class FisrtPersonConroller : MonoBehaviour
 
     }
 
-	void OnCollisionEnter(Collider col)
+	void OnCollisionEnter(Collision col)
 	{
 		if(col.transform.tag.Equals("PowerUp"))
 		{
@@ -152,7 +152,9 @@ public class FisrtPersonConroller : MonoBehaviour
 			default:
 				break;
 			}
-		}
+			Destroy (col.gameObject);
+		} 
+
 	}
 
     void OnCollisionStay(Collision collisionInfo)

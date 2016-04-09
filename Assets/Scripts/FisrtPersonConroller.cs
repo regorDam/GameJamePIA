@@ -198,6 +198,10 @@ public class FisrtPersonConroller : MonoBehaviour
 
 	bool CheckFire()
 	{
+		if (EventSystem.current.IsPointerOverGameObject())
+		{ // UI elements getting the hit/hover & is dead
+			return false;
+		}
 		return true;
 	}
 

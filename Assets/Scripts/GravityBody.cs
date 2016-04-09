@@ -10,7 +10,7 @@ public class GravityBody : MonoBehaviour
 
     public bool dontAffectForce;
 
-    void Awake()
+    void Start()
     {
         planet = GameObject.FindGameObjectWithTag("Planet").GetComponent<GravityAttractor>();
         rgb = GetComponent<Rigidbody>();

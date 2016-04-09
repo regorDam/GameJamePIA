@@ -3,22 +3,28 @@ using System.Collections;
 
 public class SpawnManager : MonoBehaviour 
 {
-
+	
 	public GameObject playerPref;
 	public GameObject enemyPref;
 	public Transform spawn1, spawn2;
-
-	// Use this for initialization
+	
+	public int numPlayers = 2;
+	
 	void Start () 
 	{
-		Spawn ();
-	
+		for (int i = 0; i < numPlayers; ++i)
+		{
+			Spawn(i);
+		}
 	}
 	
-	void Spawn()
+	void Spawn(int playerId)
 	{
 		GameObject player = (GameObject)Instantiate (playerPref, spawn1.position, Quaternion.identity);
-
-		
+		GameObject cam = player.transform.FindChild("Main Camera").gameObject; 
+		cam.GetComponent<Camera>().rect = new Rect(1.0f / numPlayers * playerId, 
+		                                           0.0f,
+		                                           1.0f / numPlayers,
+		                                           1.0f);
 	}
 }

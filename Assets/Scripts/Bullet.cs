@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 	public float FireRate = 0.0f;
 
 
-	private FirstPersonConroller player;
+	private FirstPersonController player;
 
     private GameObject owner;
     int damage;

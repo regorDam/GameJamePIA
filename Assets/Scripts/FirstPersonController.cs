@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-public class FirstPersonConroller : MonoBehaviour
+public class FirstPersonController : MonoBehaviour
 {
 	//Player Settings
     public float mouseSensitivityX = 250f;

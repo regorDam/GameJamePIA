@@ -20,6 +20,13 @@ public class FirstPersonConroller : MonoBehaviour
     public LayerMask groundedMask;
 	public float score = 0;
     public int playerId = 0;
+	private const float maxCooldownAttack = 1f;
+	private const float maxCooldownDefense = 2.5f;
+	public float cooldownAttack = maxCooldownAttack;
+	public float cooldownDefense = maxCooldownDefense;
+	private bool isAttacking = false;
+	private bool isDefending = false;
+	public bool isBlocking = false;
 
 	//Connections
 	private WeaponController weaponController;
@@ -144,10 +151,41 @@ public class FirstPersonConroller : MonoBehaviour
             //grounded = false;
         }
 
+		// attacking
+		if (isAttacking) 
+		{
+			cooldownAttack -= Time.deltaTime;
+			if (cooldownAttack < 0) 
+			{
+				cooldownAttack = maxCooldownAttack;
+				isAttacking = false;
+			}
+		}
 
         if(Input.GetButtonDown("Fire" + playerId) && CheckFire())
 		{
+			isAttacking = true;
 			Fire();
+		}
+
+		// defending
+		if (isDefending) 
+		{
+			cooldownDefense -= Time.deltaTime;
+			if (cooldownDefense < 0) 
+			{
+				cooldownDefense = maxCooldownDefense;
+				isDefending = false;
+			}
+		}
+
+		if (Input.GetButtonDown ("Block" + playerId) && CheckFire ()) {
+			isDefending = true;
+			isBlocking = true;
+
+		} else 
+		{
+			isBlocking = false;
 		}
     }
 
@@ -214,6 +252,12 @@ public class FirstPersonConroller : MonoBehaviour
 		{ // UI elements getting the hit/hover & is dead
 			return false;
 		}
+
+		if (cooldownAttack != 0) 
+		{
+			return false;
+		}
+
 		return true;
 	}
 

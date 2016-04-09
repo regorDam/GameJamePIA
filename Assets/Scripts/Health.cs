@@ -6,6 +6,7 @@ public class Health : MonoBehaviour
 {
 
     public const int maxHealth = 200;
+	public int lifes = 3;
 
    
     public int currentHealth = maxHealth;
@@ -28,6 +29,10 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+		if (transform.GetComponent<FirstPersonConroller> ().isBlocking) 
+		{
+			return;
+		}
         currentHealth -= amount;
         if(currentHealth <= 0)
         {
@@ -38,8 +43,10 @@ public class Health : MonoBehaviour
             else
             {
                 currentHealth = maxHealth;
-
-                Respawn();
+				lifes--;
+				if (lifes > 0) {
+				 	Respawn();
+				}
             }
         }   
     }

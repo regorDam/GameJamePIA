@@ -21,10 +21,9 @@ public class SpawnManager : MonoBehaviour
 	void Spawn(int playerId)
 	{
 		GameObject player = (GameObject)Instantiate (playerPref, spawn1.position, Quaternion.identity);
+        player.GetComponent<FisrtPersonConroller>().playerId = playerId; 
 		GameObject cam = player.transform.FindChild("Main Camera").gameObject; 
-		cam.GetComponent<Camera>().rect = new Rect(1.0f / numPlayers * playerId, 
-		                                           0.0f,
-		                                           1.0f / numPlayers,
-		                                           1.0f);
+        cam.GetComponent<Camera>().rect = 
+            new Rect(0.0f,  1.0f / numPlayers * playerId, 1.0f, 1.0f / numPlayers);
 	}
 }

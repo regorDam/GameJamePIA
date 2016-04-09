@@ -18,6 +18,8 @@ public class FisrtPersonConroller : MonoBehaviour
 	float jumpForcePower;
     public LayerMask groundedMask;
 
+    public int playerId = 0;
+
 	//Connections
 	private WeaponController weaponController;
 	Rigidbody rgb;
@@ -61,12 +63,13 @@ public class FisrtPersonConroller : MonoBehaviour
 		if (!m_focus)
 			return;
 		
-        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivityX);
-        verticalLookRotation += Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivityY;
+        transform.Rotate(Vector3.up * Input.GetAxis("RightJoystickX" + playerId) * Time.deltaTime * mouseSensitivityX);
+        verticalLookRotation += Input.GetAxis("RightJoystickY" + playerId) * Time.deltaTime * mouseSensitivityY;
         verticalLookRotation = Mathf.Clamp(verticalLookRotation, -60, 60);
         cameraT.localEulerAngles = Vector3.left * verticalLookRotation;
 
-        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal" + playerId), 0, 
+                                      Input.GetAxisRaw("Vertical" + playerId)).normalized;
         Vector3 targetMoveAmount;
 
         if (Input.GetKeyDown(KeyCode.P))
@@ -110,7 +113,7 @@ public class FisrtPersonConroller : MonoBehaviour
         }
         moveAmount = Vector3.SmoothDamp(moveAmount, targetMoveAmount, ref smoothMoveVelocity, .15f);
 
-        if(Input.GetButtonDown("Jump"))
+        if(Input.GetButtonDown("Jump" + playerId))
         {
             if (grounded)
             {
@@ -132,12 +135,10 @@ public class FisrtPersonConroller : MonoBehaviour
         }
 
 
-		if(Input.GetButtonDown("Fire1") && CheckFire())
+        if(Input.GetButtonDown("Fire" + playerId) && CheckFire())
 		{
 			Fire();
 		}
-
-
     }
 
 	void OnCollisionEnter(Collision col)
@@ -194,11 +195,6 @@ public class FisrtPersonConroller : MonoBehaviour
 
 	bool CheckFire()
 	{
-		if (EventSystem.current.IsPointerOverGameObject())
-		{ // UI elements getting the hit/hover & is dead
-			return false;
-		}
-
 		return true;
 	}
 

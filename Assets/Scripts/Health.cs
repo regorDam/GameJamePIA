@@ -29,7 +29,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-		if (transform.GetComponent<FirstPersonConroller> ().isBlocking) 
+		if (transform.GetComponent<FirstPersonController> ().isBlocking)
 		{
 			return;
 		}

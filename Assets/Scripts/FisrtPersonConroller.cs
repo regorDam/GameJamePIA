@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 public class FisrtPersonConroller : MonoBehaviour
@@ -36,7 +37,7 @@ public class FisrtPersonConroller : MonoBehaviour
 	bool jumpPower = false;
 	bool haloShield = false;
 	bool enrage = false;
-	public Transform bulletSpawn;
+	public List<Transform> bulletSpawn = new List<Transform>();
 
 
 	public float coldownPowerUp;
@@ -206,10 +207,22 @@ public class FisrtPersonConroller : MonoBehaviour
 	public void Fire()
 	{
 		GameObject bullet;
-		bullet = (GameObject)Instantiate(Resources.Load("Prefabs/Bullet", typeof(GameObject)), bulletSpawn.position, bulletSpawn.rotation);
-		bullet.GetComponent<Bullet>().Config(gameObject, 2);
-		//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
-		bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * bullet.GetComponent<Bullet>().speed);
+		if (enrage) {
+			for (int x = 0; x > 3; x++) {
+				
+				bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet", typeof(GameObject)), bulletSpawn [0].position, bulletSpawn [0].rotation);
+				bullet.GetComponent<Bullet> ().Config (gameObject, 2);
+				//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
+				bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
+
+			}
+		} else 
+		{
+			bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet", typeof(GameObject)), bulletSpawn [0].position, bulletSpawn [0].rotation);
+			bullet.GetComponent<Bullet> ().Config (gameObject, 2);
+			//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
+			bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
+		}
 		if(!GetComponentInChildren<AudioSource>().isPlaying)
 		{
 			GetComponentInChildren<AudioSource>().Play();

@@ -5,11 +5,16 @@ ModelImporter:
   fileIDToRecycleName:
     100000: plantinhas:Default_plantinhas:group31 polySurface37
     100002: //RootNode
+    100004: plantinhas:Default_plantinhas:group31_polySurface37
     400000: plantinhas:Default_plantinhas:group31 polySurface37
     400002: //RootNode
+    400004: plantinhas:Default_plantinhas:group31_polySurface37
     2300000: plantinhas:Default_plantinhas:group31 polySurface37
+    2300002: plantinhas:Default_plantinhas:group31_polySurface37
     3300000: plantinhas:Default_plantinhas:group31 polySurface37
+    3300002: plantinhas:Default_plantinhas:group31_polySurface37
     4300000: plantinhas:Default_plantinhas:group31 polySurface37
+    4300002: plantinhas:Default_plantinhas:group31_polySurface37
     9500000: //RootNode
   materials:
     importMaterials: 1

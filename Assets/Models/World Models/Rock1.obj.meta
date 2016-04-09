@@ -5,11 +5,16 @@ ModelImporter:
   fileIDToRecycleName:
     100000: preda4:Default_preda4:group16 preda4:polySurface1
     100002: //RootNode
+    100004: preda4:Default_preda4:group16_preda4:polySurface1
     400000: preda4:Default_preda4:group16 preda4:polySurface1
     400002: //RootNode
+    400004: preda4:Default_preda4:group16_preda4:polySurface1
     2300000: preda4:Default_preda4:group16 preda4:polySurface1
+    2300002: preda4:Default_preda4:group16_preda4:polySurface1
     3300000: preda4:Default_preda4:group16 preda4:polySurface1
+    3300002: preda4:Default_preda4:group16_preda4:polySurface1
     4300000: preda4:Default_preda4:group16 preda4:polySurface1
+    4300002: preda4:Default_preda4:group16_preda4:polySurface1
     9500000: //RootNode
   materials:
     importMaterials: 1

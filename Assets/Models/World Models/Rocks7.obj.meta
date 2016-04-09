@@ -5,11 +5,16 @@ ModelImporter:
   fileIDToRecycleName:
     100000: predinhas2:Default_predinhas2:group22 preda3:polySurface4
     100002: //RootNode
+    100004: predinhas2:Default_predinhas2:group22_preda3:polySurface4
     400000: predinhas2:Default_predinhas2:group22 preda3:polySurface4
     400002: //RootNode
+    400004: predinhas2:Default_predinhas2:group22_preda3:polySurface4
     2300000: predinhas2:Default_predinhas2:group22 preda3:polySurface4
+    2300002: predinhas2:Default_predinhas2:group22_preda3:polySurface4
     3300000: predinhas2:Default_predinhas2:group22 preda3:polySurface4
+    3300002: predinhas2:Default_predinhas2:group22_preda3:polySurface4
     4300000: predinhas2:Default_predinhas2:group22 preda3:polySurface4
+    4300002: predinhas2:Default_predinhas2:group22_preda3:polySurface4
     9500000: //RootNode
   materials:
     importMaterials: 1

@@ -6,15 +6,20 @@ ModelImporter:
     100000: plantinhas:Default_plantinhas:group31 polySurface55 polySurface36 polySurface18
       plantinhas:polySurface1
     100002: //RootNode
+    100004: plantinhas:Default_plantinhas:group31_polySurface55_polySurface36_polySurface18_plantinhas:polySurface1
     400000: plantinhas:Default_plantinhas:group31 polySurface55 polySurface36 polySurface18
       plantinhas:polySurface1
     400002: //RootNode
+    400004: plantinhas:Default_plantinhas:group31_polySurface55_polySurface36_polySurface18_plantinhas:polySurface1
     2300000: plantinhas:Default_plantinhas:group31 polySurface55 polySurface36 polySurface18
       plantinhas:polySurface1
+    2300002: plantinhas:Default_plantinhas:group31_polySurface55_polySurface36_polySurface18_plantinhas:polySurface1
     3300000: plantinhas:Default_plantinhas:group31 polySurface55 polySurface36 polySurface18
       plantinhas:polySurface1
+    3300002: plantinhas:Default_plantinhas:group31_polySurface55_polySurface36_polySurface18_plantinhas:polySurface1
     4300000: plantinhas:Default_plantinhas:group31 polySurface55 polySurface36 polySurface18
       plantinhas:polySurface1
+    4300002: plantinhas:Default_plantinhas:group31_polySurface55_polySurface36_polySurface18_plantinhas:polySurface1
     9500000: //RootNode
   materials:
     importMaterials: 1

@@ -9,7 +9,10 @@ public class HUDManager : MonoBehaviour
 
 	private GameObject[] imgLifes;
 	private Health health;
-	public GameObject imgPowerUp;
+
+	public static GameObject imgPowerUp;
+
+
 	// Use this for initialization
 	void Start () {
 	

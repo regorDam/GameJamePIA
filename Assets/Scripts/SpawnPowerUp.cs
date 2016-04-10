@@ -45,10 +45,6 @@ public class SpawnPowerUp : MonoBehaviour
 			princesGO1.SetActive (true);
 		}
 
-
-
-
-		
 	
 	}
 

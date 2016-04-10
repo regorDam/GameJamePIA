@@ -52,6 +52,10 @@ public class FirstPersonController : MonoBehaviour
 	private bool hasPowerUp = false;
 
 
+
+	public Sprite spJump, spRun, spAura, spRage;
+
+
 	public float coldownPowerUp;
 	public class KnightHashIDs{
 		public int die;
@@ -140,7 +144,7 @@ public class FirstPersonController : MonoBehaviour
 		}
 
 
-		HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_Disabled", typeof(Sprite)) as Sprite;
+//		HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_Disabled", typeof(Sprite)) as Sprite;
 
 
 		if ((Input.GetButton("Run" + playerId) || Input.GetKey("right shift")))
@@ -227,22 +231,22 @@ public class FirstPersonController : MonoBehaviour
 			case 1:
 				runPower = true;
 				coldownPowerUp = 13;
-				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Run", typeof(Sprite)) as Sprite;
+//				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Run", typeof(Sprite)) as Sprite;
 				break;
 			case 2:
 				jumpPower = true;
 				coldownPowerUp = 13;
-				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Jump", typeof(Sprite)) as Sprite;
+//				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Jump", typeof(Sprite)) as Sprite;
 				break;
 			case 3:
 				haloShield = true;
 				coldownPowerUp = 5;
-				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Escudo", typeof(Sprite)) as Sprite;
+				//				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Escudo", typeof(Sprite)) as Sprite;
 				break;
 			case 4:
 				enrage = true;
 				coldownPowerUp = 6;
-				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Rage", typeof(Sprite)) as Sprite;
+				//				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Rage", typeof(Sprite)) as Sprite;
 				break;
 			default:
 				

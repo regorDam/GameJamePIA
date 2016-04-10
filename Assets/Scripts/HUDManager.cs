@@ -9,7 +9,7 @@ public class HUDManager : MonoBehaviour
 
 	private GameObject[] imgLifes;
 	private Health health;
-
+	public GameObject imgPowerUp;
 	// Use this for initialization
 	void Start () {
 	
@@ -17,11 +17,9 @@ public class HUDManager : MonoBehaviour
 
 		health = transform.GetComponent<Health> ();
 
-
+		imgPowerUp = transform.Find ("Main Camera/HUD Canvas/Panel/PowerUpBag").gameObject;
 
 	}
-
-
 
 
 

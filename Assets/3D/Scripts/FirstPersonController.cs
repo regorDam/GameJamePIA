@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -52,7 +53,10 @@ public class FirstPersonController : MonoBehaviour
 	private bool hasPowerUp = false;
 
 
+	public string nameknight = "knight_FBX_Walk";
+	public string namedragon = "Dragon_FBX_WALK";
 
+	public string nameObj;
 	public Sprite spJump, spRun, spAura, spRage;
 
 
@@ -74,12 +78,26 @@ public class FirstPersonController : MonoBehaviour
 	{
 		//cameraT = Camera.main.transform;
 		transform.SetParent (GameObject.Find ("World").transform);
+
+		if (playerId == 1) {
+			nameObj = namedragon;
+			transform.Find (nameObj).gameObject.SetActive (true);
+			transform.Find (nameknight).gameObject.SetActive (false);
+
+		} else {
+			nameObj = nameknight;
+			transform.Find (nameObj).gameObject.SetActive (true);
+			transform.Find (namedragon).gameObject.SetActive (false);
+		}
+		anim = transform.Find(nameObj).GetComponent<Animator>();
 	}
 
 
 	void Awake()
 	{
-		anim = transform.Find("knight_FBX_Walk").GetComponent<Animator>();
+
+
+
 		knightHash = new KnightHashIDs(anim);
 		weaponController = GameObject.Find ("Main Camera/Weapon").GetComponent<WeaponController> ();
 
@@ -118,17 +136,23 @@ public class FirstPersonController : MonoBehaviour
 
 		coldownPowerUp -= Time.deltaTime;
 
-		if (runPower && coldownPowerUp > 0)
+
+		////// CHECK powerUPS
+		bool check = true;
+		if (runPower && coldownPowerUp > 0) {
 			runSpeedPower = 5;
+			check = false;
+		}
 		else 
 		{
-			
 			runPower = false;
 			runSpeedPower = 1;
 		}
 
-		if (jumpPower && coldownPowerUp > 0)
+		if (jumpPower && coldownPowerUp > 0) {
 			jumpForcePower = 5;
+			check = false;
+		}
 		else 
 		{
 			jumpPower = false;
@@ -137,14 +161,19 @@ public class FirstPersonController : MonoBehaviour
 
 		if (haloShield && coldownPowerUp < 0) {
 			haloShield = false;
+		} else {
+			check = false;
 		}
 
 		if (enrage && coldownPowerUp < 0) {
 			enrage = false;
+		} else {
+			check = false;
 		}
 
 
-//		HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_Disabled", typeof(Sprite)) as Sprite;
+		if(check)
+			GetComponent<HUDManager>().imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_Disabled", typeof(Sprite)) as Sprite;
 
 
 		if ((Input.GetButton("Run" + playerId) || Input.GetKey("right shift")))
@@ -192,9 +221,13 @@ public class FirstPersonController : MonoBehaviour
 		}
 		*/
 
-		if(Input.GetButton("Fire" + playerId))
+		if(Input.GetButtonDown("Fire" + playerId))
 		{
-			Fire();
+			if (playerId == 1) {
+				FireDragon ();
+			} else {
+				Fire ();
+			}
 			anim.SetTrigger (knightHash.attack);
 			//FIRE CALLANIMATOR
 		}
@@ -218,6 +251,18 @@ public class FirstPersonController : MonoBehaviour
 		{
 			isBlocking = false;
 		}
+
+
+		GameObject[] players = GameObject.FindGameObjectsWithTag ("Player");
+
+		foreach(GameObject player in players)
+		{
+
+			if (player.GetComponent<Health> ().lifes <= 0) 
+			{
+				SceneManager.LoadScene ("Menu");
+			}
+		}
 	}
 
 
@@ -231,22 +276,22 @@ public class FirstPersonController : MonoBehaviour
 			case 1:
 				runPower = true;
 				coldownPowerUp = 13;
-//				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Run", typeof(Sprite)) as Sprite;
+				GetComponent<HUDManager>().imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Run", typeof(Sprite)) as Sprite;
 				break;
 			case 2:
 				jumpPower = true;
 				coldownPowerUp = 13;
-//				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Jump", typeof(Sprite)) as Sprite;
+				GetComponent<HUDManager>().imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Jump", typeof(Sprite)) as Sprite;
 				break;
 			case 3:
 				haloShield = true;
 				coldownPowerUp = 5;
-				//				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Escudo", typeof(Sprite)) as Sprite;
+				GetComponent<HUDManager>().imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Escudo", typeof(Sprite)) as Sprite;
 				break;
 			case 4:
 				enrage = true;
 				coldownPowerUp = 6;
-				//				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Rage", typeof(Sprite)) as Sprite;
+				GetComponent<HUDManager>().imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Rage", typeof(Sprite)) as Sprite;
 				break;
 			default:
 				
@@ -312,9 +357,8 @@ public class FirstPersonController : MonoBehaviour
 		if (enrage) {
 			for (int x = 0; x < 3; x++) 
 			{
-				Debug.Log ("SHOT");
 				bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet2", typeof(GameObject)), bulletSpawn [x].position, bulletSpawn [x].rotation);
-				bullet.GetComponent<Bullet> ().Config (gameObject, 43);
+				bullet.GetComponent<Bullet> ().Config (gameObject, 100);
 				//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
 				bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
 
@@ -322,7 +366,35 @@ public class FirstPersonController : MonoBehaviour
 		} else 
 		{
 			bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet", typeof(GameObject)), bulletSpawn [0].position, bulletSpawn [0].rotation);
-			bullet.GetComponent<Bullet> ().Config (gameObject, 2);
+			bullet.GetComponent<Bullet> ().Config (gameObject, 40);
+			//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
+			bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
+		}
+
+
+		if(!GetComponentInChildren<AudioSource>().isPlaying)
+		{
+			GetComponentInChildren<AudioSource>().Play();
+		}
+
+	}
+
+	public void FireDragon()
+	{
+		GameObject bullet;
+		if (enrage) {
+			for (int x = 0; x < 3; x++) 
+			{
+				bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/fireball", typeof(GameObject)), bulletSpawn [x].position, bulletSpawn [x].rotation);
+				bullet.GetComponent<Bullet> ().Config (gameObject, 100);
+				//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
+				bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
+
+			}
+		} else 
+		{
+			bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/fireball", typeof(GameObject)), bulletSpawn [0].position, bulletSpawn [0].rotation);
+			bullet.GetComponent<Bullet> ().Config (gameObject, 40);
 			//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
 			bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
 		}

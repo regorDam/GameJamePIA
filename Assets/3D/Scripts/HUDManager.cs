@@ -20,7 +20,7 @@ public class HUDManager : MonoBehaviour
 
 		health = transform.GetComponent<Health> ();
 
-		//imgPowerUp = transform.Find ("Main Camera/HUD Canvas/Panel/PowerUpBag").gameObject;
+		imgPowerUp = transform.Find ("Main Camera/HUD Canvas/Panel/PowerUpBag").gameObject;
 
 	}
 

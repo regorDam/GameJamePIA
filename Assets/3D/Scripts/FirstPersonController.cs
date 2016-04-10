@@ -7,20 +7,20 @@ using UnityEngine.UI;
 public class FirstPersonController : MonoBehaviour
 {
 	//Player Settings
-    public float mouseSensitivityX = 250f;
-    public float mouseSensitivityY = 250f;
-    public float walkSpeed = 8f;
-    public float runSpeed = 14f;
-    public float jumpForce = 220;
-    public bool godMode;
-    public float godForceMax = 5;
-    float godForceMin = 1;
-    float godForce;
+	public float mouseSensitivityX = 250f;
+	public float mouseSensitivityY = 250f;
+	public float walkSpeed = 8f;
+	public float runSpeed = 14f;
+	public float jumpForce = 220;
+	public bool godMode;
+	public float godForceMax = 5;
+	float godForceMin = 1;
+	float godForce;
 	float runSpeedPower;
 	float jumpForcePower;
-    public LayerMask groundedMask;
+	public LayerMask groundedMask;
 	public float score = 0;
-    public int playerId = 0;
+	public int playerId = 0;
 	private const float maxCooldownAttack = 1f;
 	private const float maxCooldownDefense = 2.5f;
 	public float cooldownAttack = maxCooldownAttack;
@@ -32,16 +32,17 @@ public class FirstPersonController : MonoBehaviour
 	//Connections
 	private WeaponController weaponController;
 	Rigidbody rgb;
-
+	public KnightHashIDs knightHash;
+	public Animator anim;
 	//[SyncVar]
-    public Transform cameraT;
-    float verticalLookRotation;
+	public Transform cameraT;
+	float verticalLookRotation;
 
 	//Helpers
-    Vector3 moveAmount;
-    Vector3 smoothMoveVelocity;
+	Vector3 moveAmount;
+	Vector3 smoothMoveVelocity;
 	bool grounded;
-    bool dead;
+	bool dead;
 	bool m_focus =true ;
 	bool runPower = false;
 	bool jumpPower = false;
@@ -51,27 +52,41 @@ public class FirstPersonController : MonoBehaviour
 
 
 	public float coldownPowerUp;
+	public class KnightHashIDs{
+		public int die;
+		public int attack;
+		public int run;
+		public int walk;
 
-    void Start ()
-    {
-        //cameraT = Camera.main.transform;
-     
+		public KnightHashIDs(Animator refAnim){
+			die = Animator.StringToHash("Die");
+			attack =Animator.StringToHash("Attack");
+			run  =Animator.StringToHash("Run");
+			walk =Animator.StringToHash("WalkSpeed"); 
+		}
+	}
+	void Start ()
+	{
+		//cameraT = Camera.main.transform;
+		transform.SetParent (GameObject.Find ("World").transform);
 	}
 
 
 	void Awake()
 	{
+		anim = transform.Find("knight_FBX_Walk").GetComponent<Animator>();
+		knightHash = new KnightHashIDs(anim);
 		weaponController = GameObject.Find ("Main Camera/Weapon").GetComponent<WeaponController> ();
-		transform.SetParent (GameObject.Find ("World").transform);
+
 		rgb = GetComponent<Rigidbody>();
-	
+
 	}
 	void Update ()
-    {
-		
+	{
+
 		if (!m_focus)
 			return;
-		
+
 		Vector3 rotX = Vector3.up * Input.GetAxis("RightJoystickX" + playerId) *  Time.deltaTime * mouseSensitivityX;
 		if(rotX.magnitude > 0.1f) transform.Rotate(rotX);
 
@@ -82,19 +97,19 @@ public class FirstPersonController : MonoBehaviour
 			verticalLookRotation = Mathf.Clamp(verticalLookRotation, -60, 60);
 		}
 
-        cameraT.localEulerAngles = Vector3.left * verticalLookRotation;
+		cameraT.localEulerAngles = Vector3.left * verticalLookRotation;
 
-        Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal" + playerId), 0, 
-                                      Input.GetAxisRaw("Vertical" + playerId)).normalized;
-        Vector3 targetMoveAmount;
+		Vector3 moveDir = new Vector3(Input.GetAxisRaw("Horizontal" + playerId), 0, 
+			Input.GetAxisRaw("Vertical" + playerId)).normalized;
+		Vector3 targetMoveAmount;
 
-        if (Input.GetKeyDown(KeyCode.P))
-            godMode = !godMode;
+		if (Input.GetKeyDown(KeyCode.P))
+			godMode = !godMode;
 
-        if (godMode)
-            godForce = godForceMax;
-        else
-            godForce = godForceMin;
+		if (godMode)
+			godForce = godForceMax;
+		else
+			godForce = godForceMin;
 
 		coldownPowerUp -= Time.deltaTime;
 
@@ -106,7 +121,7 @@ public class FirstPersonController : MonoBehaviour
 			runPower = false;
 			runSpeedPower = 1;
 		}
-			
+
 		if (jumpPower && coldownPowerUp > 0)
 			jumpForcePower = 5;
 		else 
@@ -127,36 +142,38 @@ public class FirstPersonController : MonoBehaviour
 		}
 
 		if ((Input.GetButton("Run" + playerId) || Input.GetKey("right shift")))
-        {
-            targetMoveAmount = moveDir * (runSpeed * godForce * runSpeedPower);
+		{
+			targetMoveAmount = moveDir * (runSpeed * godForce * runSpeedPower);
+			//RUN CALLANIMATOR
+			anim.SetBool(knightHash.run, true);
+		}
+		else
+		{
+			anim.SetBool(knightHash.run, false);
+			targetMoveAmount = moveDir * (walkSpeed + godForce);
+		}
+		moveAmount = Vector3.SmoothDamp(moveAmount, targetMoveAmount, ref smoothMoveVelocity, .15f);
 
-        }
-        else
-        {
-            targetMoveAmount = moveDir * (walkSpeed + godForce);
-        }
-        moveAmount = Vector3.SmoothDamp(moveAmount, targetMoveAmount, ref smoothMoveVelocity, .15f);
-
-        if(Input.GetButtonDown("Jump" + playerId))
-        {
-            if (grounded)
-            {
+		if(Input.GetButtonDown("Jump" + playerId))
+		{
+			if (grounded)
+			{
 				rgb.AddForce(transform.up * (jumpForce * godForce * jumpForcePower));
-            }
+			}
 
-        }
-        
-        Ray ray = new Ray(transform.position, -transform.up);
-        RaycastHit hit;
+		}
 
-       if (Physics.Raycast(ray, out hit, 1 + .1f, groundedMask))
-        {
-            grounded = true;
-        }
-        else
-        {
-            //grounded = false;
-        }
+		Ray ray = new Ray(transform.position, -transform.up);
+		RaycastHit hit;
+
+		if (Physics.Raycast(ray, out hit, 1 + .1f, groundedMask))
+		{
+			grounded = true;
+		}
+		else
+		{
+			//grounded = false;
+		}
 
 		// attacking
 
@@ -172,6 +189,8 @@ public class FirstPersonController : MonoBehaviour
 		if(Input.GetButton("Fire" + playerId))
 		{
 			Fire();
+			anim.SetTrigger (knightHash.attack);
+			//FIRE CALLANIMATOR
 		}
 
 		// defending
@@ -193,8 +212,8 @@ public class FirstPersonController : MonoBehaviour
 		{
 			isBlocking = false;
 		}
-    }
-		
+	}
+
 
 	void OnCollisionEnter(Collision col)
 	{
@@ -235,22 +254,24 @@ public class FirstPersonController : MonoBehaviour
 
 	}
 
-    void OnCollisionStay(Collision collisionInfo)
-    {
-        if(collisionInfo.gameObject.layer == 8)
-        {
-            grounded = true;
-        }
-    }
-    void OnCollisionExit()
-    {
-        grounded = false;
-    }
+	void OnCollisionStay(Collision collisionInfo)
+	{
+		if(collisionInfo.gameObject.layer == 8)
+		{
+			grounded = true;
+		}
+	}
+	void OnCollisionExit()
+	{
+		grounded = false;
+	}
 
-        void FixedUpdate()
-    {
-        rgb.MovePosition(rgb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
-    }
+	void FixedUpdate()
+	{
+		rgb.MovePosition(rgb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);
+		//WALK CALL ANIMATOR rgb.velocity
+		anim.SetFloat(knightHash.walk, moveAmount.magnitude);
+	}
 
 	void OnApplicationFocus(bool value){
 		m_focus = value;
@@ -273,34 +294,34 @@ public class FirstPersonController : MonoBehaviour
 	}
 
 
-    public void Fire()
-    {
-        GameObject bullet;
-        if (enrage) {
-            for (int x = 0; x < 3; x++) 
-            {
-                Debug.Log ("SHOT");
-                bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet2", typeof(GameObject)), bulletSpawn [x].position, bulletSpawn [x].rotation);
-                bullet.GetComponent<Bullet> ().Config (gameObject, 20);
-                //bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
-                bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
+	public void Fire()
+	{
+		GameObject bullet;
+		if (enrage) {
+			for (int x = 0; x < 3; x++) 
+			{
+				Debug.Log ("SHOT");
+				bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet2", typeof(GameObject)), bulletSpawn [x].position, bulletSpawn [x].rotation);
+				bullet.GetComponent<Bullet> ().Config (gameObject, 20);
+				//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
+				bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
 
-            }
-        } else 
-        {
-            bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet", typeof(GameObject)), bulletSpawn [0].position, bulletSpawn [0].rotation);
-            bullet.GetComponent<Bullet> ().Config (gameObject, 2);
-            //bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
-            bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
-        }
+			}
+		} else 
+		{
+			bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet", typeof(GameObject)), bulletSpawn [0].position, bulletSpawn [0].rotation);
+			bullet.GetComponent<Bullet> ().Config (gameObject, 2);
+			//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
+			bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
+		}
 
 
-        if(!GetComponentInChildren<AudioSource>().isPlaying)
-        {
-            GetComponentInChildren<AudioSource>().Play();
-        }
+		if(!GetComponentInChildren<AudioSource>().isPlaying)
+		{
+			GetComponentInChildren<AudioSource>().Play();
+		}
 
-    }
+	}
 
 
 

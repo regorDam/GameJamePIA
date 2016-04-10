@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -101,6 +102,7 @@ public class FirstPersonController : MonoBehaviour
 			runSpeedPower = 5;
 		else 
 		{
+			HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_", typeof(Sprite)) as Sprite;
 			runPower = false;
 			runSpeedPower = 1;
 		}
@@ -109,15 +111,20 @@ public class FirstPersonController : MonoBehaviour
 			jumpForcePower = 5;
 		else 
 		{
+			HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_", typeof(Sprite)) as Sprite;
 			jumpPower = false;
 			jumpForcePower = 1;
 		}
 
-		if (haloShield && coldownPowerUp < 0)
+		if (haloShield && coldownPowerUp < 0) {
 			haloShield = false;
+			HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_",typeof(Sprite)) as Sprite;
+		}
 
-		if (enrage && coldownPowerUp < 0)
+		if (enrage && coldownPowerUp < 0) {
+			HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_",typeof(Sprite)) as Sprite;
 			enrage = false;
+		}
 
 		if ((Input.GetButton("Run" + playerId) || Input.GetKey("right shift")))
         {
@@ -187,6 +194,7 @@ public class FirstPersonController : MonoBehaviour
 			isBlocking = false;
 		}
     }
+		
 
 	void OnCollisionEnter(Collision col)
 	{
@@ -197,18 +205,22 @@ public class FirstPersonController : MonoBehaviour
 			case 1:
 				runPower = true;
 				coldownPowerUp = 13;
+				HUDManager.imgPowerUp.GetComponent<Image>().sprite = Resources.Load("Sprites/PoUp_Icon_Run",typeof(Sprite)) as Sprite;
 				break;
 			case 2:
 				jumpPower = true;
 				coldownPowerUp = 13;
+				HUDManager.imgPowerUp.GetComponent<Image>().sprite = Resources.Load("Sprites/PoUp_Icon_Jump",typeof(Sprite)) as Sprite;
 				break;
 			case 3:
 				haloShield = true;
 				coldownPowerUp = 5;
+				HUDManager.imgPowerUp.GetComponent<Image>().sprite = Resources.Load("Sprites/PoUp_Icon_Escudo",typeof(Sprite)) as Sprite;
 				break;
 			case 4:
 				enrage = true;
 				coldownPowerUp = 6;
+				HUDManager.imgPowerUp.GetComponent<Image>().sprite = Resources.Load("Sprites/PoUp_Icon_Rage", typeof(Sprite)) as Sprite;
 				break;
 			default:
 				break;

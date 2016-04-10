@@ -46,6 +46,7 @@ public class Bullet : MonoBehaviour
         {
             Destroy(gameObject, 4);
         }
+		if(owner.Equals(col.gameObject)) return;
 
 		var hit = col.gameObject;
 		var health = hit.GetComponent<Health>();

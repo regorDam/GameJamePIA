@@ -152,19 +152,18 @@ public class FirstPersonController : MonoBehaviour
         }
 
 		// attacking
-		if (isAttacking) 
-		{
-			cooldownAttack -= Time.deltaTime;
-			if (cooldownAttack < 0) 
-			{
-				cooldownAttack = maxCooldownAttack;
-				isAttacking = false;
-			}
-		}
 
-        if(Input.GetButtonDown("Fire" + playerId) && CheckFire())
+		/*
+		cooldownAttack -= Time.deltaTime;
+		if (cooldownAttack < 0) 
 		{
-			isAttacking = true;
+			cooldownAttack = maxCooldownAttack;
+			isAttacking = false;
+		}
+		*/
+
+		if(Input.GetButton("Fire" + playerId))
+		{
 			Fire();
 		}
 
@@ -179,7 +178,7 @@ public class FirstPersonController : MonoBehaviour
 			}
 		}
 
-		if (Input.GetButtonDown ("Block" + playerId) && CheckFire ()) {
+		if (Input.GetButtonDown ("Block" + playerId)) {
 			isDefending = true;
 			isBlocking = true;
 
@@ -253,9 +252,9 @@ public class FirstPersonController : MonoBehaviour
 			return false;
 		}
 
-		if (cooldownAttack != 0) 
+		if (cooldownAttack > 0) 
 		{
-			return false;
+			//return false;
 		}
 
 		return true;
@@ -270,7 +269,7 @@ public class FirstPersonController : MonoBehaviour
             {
                 Debug.Log ("SHOT");
                 bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet2", typeof(GameObject)), bulletSpawn [x].position, bulletSpawn [x].rotation);
-                bullet.GetComponent<Bullet> ().Config (gameObject, 2);
+                bullet.GetComponent<Bullet> ().Config (gameObject, 20);
                 //bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
                 bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
 
@@ -282,6 +281,8 @@ public class FirstPersonController : MonoBehaviour
             //bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
             bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
         }
+
+
         if(!GetComponentInChildren<AudioSource>().isPlaying)
         {
             GetComponentInChildren<AudioSource>().Play();

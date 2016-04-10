@@ -49,6 +49,7 @@ public class FirstPersonController : MonoBehaviour
 	bool haloShield = false;
 	bool enrage = false;
 	public List<Transform> bulletSpawn = new List<Transform>();
+	private bool hasPowerUp = false;
 
 
 	public float coldownPowerUp;
@@ -117,7 +118,7 @@ public class FirstPersonController : MonoBehaviour
 			runSpeedPower = 5;
 		else 
 		{
-			HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_", typeof(Sprite)) as Sprite;
+			
 			runPower = false;
 			runSpeedPower = 1;
 		}
@@ -126,20 +127,21 @@ public class FirstPersonController : MonoBehaviour
 			jumpForcePower = 5;
 		else 
 		{
-			HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_", typeof(Sprite)) as Sprite;
 			jumpPower = false;
 			jumpForcePower = 1;
 		}
 
 		if (haloShield && coldownPowerUp < 0) {
 			haloShield = false;
-			HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_",typeof(Sprite)) as Sprite;
 		}
 
 		if (enrage && coldownPowerUp < 0) {
-			HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_",typeof(Sprite)) as Sprite;
 			enrage = false;
 		}
+
+
+		HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load("Sprites/PoUp_Icon_Disabled", typeof(Sprite)) as Sprite;
+
 
 		if ((Input.GetButton("Run" + playerId) || Input.GetKey("right shift")))
 		{
@@ -217,35 +219,41 @@ public class FirstPersonController : MonoBehaviour
 
 	void OnCollisionEnter(Collision col)
 	{
-		if(col.transform.tag.Equals("PowerUp"))
+		
+		if (col.transform.tag.Equals("PowerUp"))
 		{
-			switch (col.transform.GetComponent<PowerUp> ().type) 
-			{
+			hasPowerUp = true;
+			switch (col.transform.GetComponent<PowerUp> ().type) {
 			case 1:
 				runPower = true;
 				coldownPowerUp = 13;
-				HUDManager.imgPowerUp.GetComponent<Image>().sprite = Resources.Load("Sprites/PoUp_Icon_Run",typeof(Sprite)) as Sprite;
+				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Run", typeof(Sprite)) as Sprite;
 				break;
 			case 2:
 				jumpPower = true;
 				coldownPowerUp = 13;
-				HUDManager.imgPowerUp.GetComponent<Image>().sprite = Resources.Load("Sprites/PoUp_Icon_Jump",typeof(Sprite)) as Sprite;
+				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Jump", typeof(Sprite)) as Sprite;
 				break;
 			case 3:
 				haloShield = true;
 				coldownPowerUp = 5;
-				HUDManager.imgPowerUp.GetComponent<Image>().sprite = Resources.Load("Sprites/PoUp_Icon_Escudo",typeof(Sprite)) as Sprite;
+				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Escudo", typeof(Sprite)) as Sprite;
 				break;
 			case 4:
 				enrage = true;
 				coldownPowerUp = 6;
-				HUDManager.imgPowerUp.GetComponent<Image>().sprite = Resources.Load("Sprites/PoUp_Icon_Rage", typeof(Sprite)) as Sprite;
+				HUDManager.imgPowerUp.GetComponent<Image> ().sprite = Resources.Load ("Sprites/PoUp_Icon_Rage", typeof(Sprite)) as Sprite;
 				break;
 			default:
+				
 				break;
 			}
 			Destroy (col.gameObject);
-		} 
+
+
+
+		}
+			
 
 		if (col.gameObject.layer == 10 && playerId == 1 || col.gameObject.layer == 11 && playerId == 2) 
 		{
@@ -302,7 +310,7 @@ public class FirstPersonController : MonoBehaviour
 			{
 				Debug.Log ("SHOT");
 				bullet = (GameObject)Instantiate (Resources.Load ("Prefabs/Bullet2", typeof(GameObject)), bulletSpawn [x].position, bulletSpawn [x].rotation);
-				bullet.GetComponent<Bullet> ().Config (gameObject, 20);
+				bullet.GetComponent<Bullet> ().Config (gameObject, 43);
 				//bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * bullet.GetComponent<Bullet>().speed;
 				bullet.GetComponent<Rigidbody> ().AddForce (bullet.transform.forward * bullet.GetComponent<Bullet> ().speed);
 
